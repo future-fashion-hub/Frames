@@ -1,3 +1,4 @@
+//LoginPage.tsx
 import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
@@ -57,6 +58,20 @@ export const Login = () => {
   const handleRegisterNavigate = () => {
     navigate('/register');
   };
+
+  const handleEmailChange = (value: string) => {
+    if (error) {
+      dispatch(clearError());
+    }
+    setEmail(value);
+  };
+
+  const handlePasswordChange = (value: string) => {
+    if (error) {
+      dispatch(clearError());
+    }
+    setPassword(value);
+  };
   
   // Если пользователь уже аутентифицирован, не рендерим форму, чтобы избежать моргания
   if (isAuthenticated) {
@@ -70,41 +85,43 @@ export const Login = () => {
         <div className={styles.ellipseBackground2}></div>
         <div className={styles.ellipseBackground3}></div>
         <div className={styles.ellipseBackground4}></div>
+        <img src={pictureOne} className={clsx(styles.decorImage, styles.pic1)} alt="Картина 1" />
+        <img src={pictureTwo} className={clsx(styles.decorImage, styles.pic2)} alt="Картина 2" />
+        <img src={pictureThree} className={clsx(styles.decorImage, styles.pic3)} alt="Картина 3" />
+        <img src={pictureFour} className={clsx(styles.decorImage, styles.pic4)} alt="Картина 4" />
+        <img src={pictureFive} className={clsx(styles.decorImage, styles.pic5)} alt="Картина 5" />
+        <img src={pictureSix} className={clsx(styles.decorImage, styles.pic6)} alt="Картина 6" />
       </div>
       
       <h1>Добро пожаловать в Frames!</h1>
       <p className={styles.text}>Вход в аккаунт</p>
       <form className={styles.form} onSubmit={handleSubmit}>
         <Input 
-          type="email"
-          value={email}
-          onChange={setEmail}
-          onValidationChange={handleValidationChange('email')}
-          required
+        type="email"
+        value={email}
+        onChange={handleEmailChange}
+        onValidationChange={handleValidationChange('email')}
+        required
+        autoCompleteType="on"
         />
         <Input 
           type="password"
           value={password}
-          onChange={setPassword}
+          onChange={handlePasswordChange}
           onValidationChange={handleValidationChange('password')}
           required
           minLength={8}
+          autoCompleteType="current-password"
         />
         {error && <p className={styles.errorText}>{error}</p>}
         
-        <Button type="submit" isValid={isFormValid}>
+        <Button type="submit" isValid={isFormValid} disabled={isLoading}>
           {isLoading ? 'Вход...' : 'Продолжить'}
         </Button>
         <Button type="button" no_bg={true} onClick={handleRegisterNavigate}>
           Еще нет аккаунта?
         </Button>
       </form>
-      <img src={pictureOne} className={clsx(styles.decorImage, styles.pic1)} alt="Картина 1" />
-      <img src={pictureTwo} className={clsx(styles.decorImage, styles.pic2)} alt="Картина 2" />
-      <img src={pictureThree} className={clsx(styles.decorImage, styles.pic3)} alt="Картина 3" />
-      <img src={pictureFour} className={clsx(styles.decorImage, styles.pic4)} alt="Картина 4" />
-      <img src={pictureFive} className={clsx(styles.decorImage, styles.pic5)} alt="Картина 5" />
-      <img src={pictureSix} className={clsx(styles.decorImage, styles.pic6)} alt="Картина 6" />
     </div>
   ); 
 };

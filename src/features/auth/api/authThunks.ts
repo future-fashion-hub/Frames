@@ -1,10 +1,8 @@
+//authThunks.ts
+import apiClient from './axiosInstance'
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios'
 import { AuthResponse, LoginData, RegisterData, LogoutData, ServerError, RefreshData } from '../model/types';
-
-const apiClient = axios.create({
-    baseURL: 'http://82.202.138.76:8080/api/v1'
-});
 
 export const registerUser = createAsyncThunk<AuthResponse, RegisterData, { rejectValue: ServerError }>(
     'auth/register',

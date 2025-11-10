@@ -1,3 +1,4 @@
+//RegisterPage.tsx
 import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
@@ -44,6 +45,21 @@ export const Register = () => {
     setValidStates(prev => ({ ...prev, [field]: isValid }));
   }, []);
 
+  const handleEmailChange = (value: string) => {
+    if (error) dispatch(clearError());
+    setEmail(value);
+  };
+
+  const handlePasswordChange = (value: string) => {
+    if (error) dispatch(clearError());
+    setPassword(value);
+  };
+  
+  const handleUsernameChange = (value: string) => {
+    if (error) dispatch(clearError());
+    setUsername(value);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isFormValid && !isLoading) { 
@@ -73,34 +89,37 @@ export const Register = () => {
           <Input 
             type="email"
             value={email}
-            onChange={setEmail}
+            onChange={handleEmailChange}
             onValidationChange={handleValidationChange('email')}
             required
             placeholder="Введите почту"
+            autoCompleteType="off"
           />
           <Input 
             type="password"
             value={password}
-            onChange={setPassword}
+            onChange={handlePasswordChange}
             onValidationChange={handleValidationChange('password')}
             required
             minLength={8}
             placeholder="Введите пароль"
+            autoCompleteType="new-password"
           />
           <Input 
             type="text"
             value={userName}
-            onChange={setUsername}
+            onChange={handleUsernameChange}
             onValidationChange={handleValidationChange('userName')}
             required
             minLength={5}
             maxLength={30}
             placeholder="Введите имя"
+            autoCompleteType="off"
           />
           
           {error && <p className={styles.errorText}>{error}</p>}
 
-          <Button type="submit" isValid={isFormValid}>
+          <Button type="submit" isValid={isFormValid} disabled={isLoading}>
             {isLoading ? 'Создание...' : 'Продолжить'}
           </Button>
         </form>

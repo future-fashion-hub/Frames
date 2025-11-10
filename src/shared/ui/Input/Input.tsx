@@ -1,3 +1,5 @@
+// Input.tsx
+
 import React, { useState, useEffect, useMemo, memo, useCallback } from 'react';
 import clsx from 'clsx';
 import styles from './Input.module.css';
@@ -18,6 +20,8 @@ export interface InputProps {
   customValidator?: (value: string) => string | null;
   onValidationChange?: (isValid: boolean) => void;
   'data-testid'?: string;
+  // ДОБАВЛЕНО: Для управления автозаполнением
+  autoCompleteType?: 'on' | 'off' | 'new-password' | 'current-password';
 }
 
 interface ValidationRules {
@@ -28,12 +32,13 @@ interface ValidationRules {
   customValidator?: (value: string) => string | null;
 }
 
+// ИЗМЕНЕНО: Более лаконичные и понятные сообщения
 const getPatternErrorMessage = (type: InputType): string => {
   switch (type) {
     case 'email':
-      return "Введите корректный email адрес";
+      return "Некорректный формат email";
     case 'password':
-      return "Пароль должен содержать минимум 1 заглавную букву, 1 строчную букву и 1 цифру";
+      return "Нужна заглавная, строчная буква и цифра";
     default:
       return "Неверный формат";
   }
@@ -47,7 +52,9 @@ const Input = memo((props: InputProps) => {
     label, 
     placeholder,
     labelPosition = 'top',
-    onValidationChange
+    onValidationChange,
+    // ДОБАВЛЕНО
+    autoCompleteType = 'off'
   } = props;
   
   const [internalValue, setInternalValue] = useState<string>(value);
@@ -62,7 +69,7 @@ const Input = memo((props: InputProps) => {
       },
       password: {
         required: true,
-        minLength: 6,
+        minLength: 8, // ИЗМЕНЕНО: Соответствует вашему LoginPage/RegisterPage
         pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
       },
       text: {
@@ -78,21 +85,22 @@ const Input = memo((props: InputProps) => {
       customValidator: props.customValidator,
     };
   }, [type, props.required, props.minLength, props.maxLength, props.pattern, props.customValidator]);
-
+  
+  // ИЗМЕНЕНО: Сообщения об ошибках стали короче
   const validateField = useCallback((valueToValidate: string): string | null => {
     const { required, minLength, maxLength, pattern, customValidator } = validationRules;
 
     if (required && !valueToValidate.trim()) {
-      return "Это поле обязательно для заполнения";
+      return "Обязательное поле";
     }
     if (!valueToValidate.trim() && !required) {
       return null;
     }
     if (minLength && valueToValidate.length < minLength) {
-      return `Минимальная длина: ${minLength} символов`;
+      return `Минимум ${minLength} символов`;
     }
     if (maxLength && valueToValidate.length > maxLength) {
-      return `Максимальная длина: ${maxLength} символов`;
+      return `Максимум ${maxLength} символов`;
     }
     if (pattern && !pattern.test(valueToValidate)) {
       return getPatternErrorMessage(type);
@@ -109,6 +117,7 @@ const Input = memo((props: InputProps) => {
     if (value !== internalValue) {
       setInternalValue(value);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   useEffect(() => {
@@ -132,10 +141,12 @@ const Input = memo((props: InputProps) => {
 
   useEffect(() => {
     if (onValidationChange) {
-      const isValid = errorMessage === null && (!validationRules.required || internalValue.length > 0);
+      const isFilled = !validationRules.required || internalValue.trim().length > 0;
+      const isValid = errorMessage === null && isFilled;
       onValidationChange(isValid);
     }
-  }, [errorMessage, internalValue, validationRules.required]); // Убрал onValidationChange из зависимостей
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorMessage, internalValue, validationRules.required]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInternalValue(e.target.value);
@@ -153,9 +164,9 @@ const Input = memo((props: InputProps) => {
   const getDefaultPlaceholder = (): string => {
     if (placeholder) return placeholder;
     switch (type) {
-      case 'email': return 'Введите адрес эл. почты';
+      case 'email': return 'Введите email';
       case 'password': return 'Введите пароль';
-      default: return 'Введите текст';
+      default: return 'Введите имя';
     }
   };
 
@@ -183,7 +194,8 @@ const Input = memo((props: InputProps) => {
           onBlur={handleBlur}
           required={props.required}
           data-testid={props["data-testid"] || `input-${type}`}
-          autoComplete={type === 'password' ? 'new-password' : 'off'}
+          // ИЗМЕНЕНО: Используем пропс для autoComplete
+          autoComplete={autoCompleteType}
         />
         {hasError && (
           <p className={styles.errorMessage} data-testid="error-message">

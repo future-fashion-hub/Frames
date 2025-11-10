@@ -1,3 +1,4 @@
+/*LoginPage.module.css*/
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -5,7 +6,7 @@
   justify-content: center;
   width: 1280px;
   min-height: 832px;
-  gap: 28px;
+  gap: 25px;
   position: relative;
   overflow: hidden;
   background-color: white;
@@ -18,9 +19,15 @@
   font-size: 24px;
 }
 
+.errorText {
+  text-align: center;
+  color: #dc2626;
+  font-size: 16px; 
+}
+
 .form {
   display: grid;
-  gap: 15px;
+  gap: 20px;
   position: relative;
   z-index: 2;
 }
@@ -29,7 +36,7 @@
   position: absolute;
   inset: 0; /* заполняет wrapper */
   overflow: hidden;
-  z-index: 0;
+  z-index: -1;
 }
 
 .ellipseBackground1, .ellipseBackground2, .ellipseBackground3, .ellipseBackground4 {

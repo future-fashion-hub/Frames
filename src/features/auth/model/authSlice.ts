@@ -1,6 +1,24 @@
+//authSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, AuthResponse} from './types';
-import { registerUser, loginUser, logoutUser } from '../api/authThunks';
+import { registerUser, loginUser, logoutUser, refreshToken } from '../api/authThunks';
+
+const translateAuthError = (serverError: any): string => {
+    if (!serverError || typeof serverError !== 'object') {
+        return 'Произошла неизвестная ошибка';
+    }
+
+    const errorMessage = serverError.message || serverError.detail || Object.values(serverError).join(', ');
+
+    switch (errorMessage) {
+        case 'invalid credentials':
+            return 'Неверный логин или пароль';
+        case 'User already exists':
+            return 'Пользователь с таким email уже существует';
+        default:
+            return errorMessage; 
+    }
+}
 
 const initialState: AuthState = {
     accessToken: localStorage.getItem('accessToken') || null,
@@ -35,7 +53,7 @@ export const authSlice = createSlice({
                 state.isLoading = false;
                 state.isAuthenticated = false;
                 if (action.payload) {
-                    state.error = Object.values(action.payload).join(', ');
+                    state.error = translateAuthError(action.payload);
                 } else {
                     state.error = action.error.message || 'Произошла ошибка регистрации';
                 }
@@ -56,7 +74,7 @@ export const authSlice = createSlice({
                 state.isLoading = false;
                 state.isAuthenticated = false;
                 if (action.payload) {
-                    state.error = Object.values(action.payload).join(', ');
+                    state.error = translateAuthError(action.payload);
                 } else {
                     state.error = action.error.message || 'Произошла ошибка входа';
                 }
@@ -80,6 +98,26 @@ export const authSlice = createSlice({
                 } else {
                     state.error = action.error.message || 'Произошла ошибка выхода';
                 }
+            })
+            
+             .addCase(refreshToken.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(refreshToken.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
+                state.isLoading = false;
+                state.isAuthenticated = true;
+                state.accessToken = action.payload.access_token;
+                state.refreshToken = action.payload.refresh_token;
+            })
+
+            .addCase(refreshToken.rejected, (state) => {
+                state.isLoading = false;
+                state.isAuthenticated = false;
+                state.accessToken = null;
+                state.refreshToken = null;
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
             });
     },
 });

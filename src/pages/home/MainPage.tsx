@@ -1,3 +1,4 @@
+//MainPage.tsx
 import { useAppDispatch, useAppSelector } from "@/app/providers/StoreProvider/store";
 import { logoutUser } from "@/features/auth/api/authThunks";
 
