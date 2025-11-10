@@ -1,0 +1,86 @@
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #FFE4AD inset !important;
+  box-shadow: 0 0 0 1000px #FFE4AD inset !important;
+  -webkit-text-fill-color: #111827 !important;
+  caret-color: #111827;
+  transition: background-color 9999s ease-out 0s;
+}
+
+.input:-moz-autofill {
+  box-shadow: 0 0 0 1000px #FFE6B0 inset !important;
+  -moz-text-fill-color: #111827 !important;
+  caret-color: #111827;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.wrapper.labelLeft {
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wrapper.labelLeft label {
+  min-width: 120px;
+}
+
+.wrapper label {
+  font-weight: 500;
+  color: #374151; 
+  white-space: nowrap;
+}
+
+.required {
+  color: #ef4444; 
+  margin-left: 0.25rem;
+}
+
+.inputWrapper {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+}
+
+.input {
+  width: 438px;
+  height: 53px;
+  padding: 28px 17px;
+  border: none;
+  border-radius: 12px;
+  background-color: rgba(255, 162, 0, 0.3);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #111827;
+  font-size: 16px;
+}
+
+.input::placeholder {
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(125, 125, 125, 0.4); 
+  box-shadow: 0 0 0 2px rgba(125, 125, 125, 0.4);
+}
+
+.input.error {
+  border-color: #dc2626;
+}
+
+.input.error:focus {
+  border-color: #dc2626;
+}
+
+.errorMessage {
+  color: #dc2626;
+  font-size: 16px;
+}

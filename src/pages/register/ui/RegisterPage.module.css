@@ -1,0 +1,79 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 1280px;
+  min-height: 832px;
+  overflow: hidden;
+  padding: 0px 90px;
+  background-color: white;
+  position: relative;
+  z-index: 0;
+}
+
+.formWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+  position: relative;
+  z-index: 2;
+}
+
+.text {
+  font-weight: 350;
+  font-style: Semilight;
+  font-size: 24px;
+}
+
+.form {
+  display: grid;
+  gap: 15px;
+  position: relative;
+  z-index: 2;
+}
+
+.backGround {
+  position: absolute;
+  inset: 0; /* заполняет wrapper */
+  overflow: hidden;
+  z-index: 0;
+}
+
+.ellipseBackground1,
+.ellipseBackground2 {
+  position: absolute;
+  width: 446px;
+  height: 965px;
+  transform: rotate(-42.89deg);
+  opacity: 1;
+  filter: blur(100px);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.ellipseBackground1 {
+  top: 186px;
+  left: 879px;
+  background: rgba(255, 194, 87, 0.3);
+}
+
+.ellipseBackground2 {
+  top: -171px;
+  left: 1003px;
+  background: rgba(249, 1, 61, 0.3);
+}
+
+.decorImage {
+  position: absolute;
+  object-fit: cover;
+  pointer-events: none; 
+  z-index: 1; 
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.pic1 { top: 153px; left: 599px; width: 261px; height: 331px; }
+.pic2 { top: 54px; left: 897px; width: 331px; height: 244px; }
+.pic3 { top: 484px; left: 629px; width: 224px; height: 287px; }
+.pic4 { top: 298px; left: 856px; width: 327px; height: 397px; }

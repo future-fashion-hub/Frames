@@ -1,0 +1,88 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1280px;
+  min-height: 832px;
+  gap: 28px;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  z-index: 0;
+}
+
+.text {
+  font-weight: 350;
+  font-style: Semilight;
+  font-size: 24px;
+}
+
+.form {
+  display: grid;
+  gap: 15px;
+  position: relative;
+  z-index: 2;
+}
+
+.backGround {
+  position: absolute;
+  inset: 0; /* заполняет wrapper */
+  overflow: hidden;
+  z-index: 0;
+}
+
+.ellipseBackground1, .ellipseBackground2, .ellipseBackground3, .ellipseBackground4 {
+  width: 446px;
+  height: 965px;
+  position: absolute;
+  opacity: 1;
+  filter: blur(100px);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.ellipseBackground1 {
+  top: 186px;
+  left: 879px;
+  transform: rotate(-42.89deg);
+  background: rgba(255, 194, 87, 0.3);
+}
+
+.ellipseBackground2 {
+  top: -171px;
+  left: 1003px;
+  transform: rotate(-48.89deg);
+  background: rgba(249, 1, 61, 0.3);
+}
+
+.ellipseBackground3 {
+  top: -486px;
+  left: -246px;
+  transform: rotate(154deg);
+  opacity: 1;
+  background: rgba(255, 194, 87, 0.3);
+}
+
+.ellipseBackground4 {
+  top: -231.28px;
+  left: -494.3px;
+  transform: rotate(148.89deg);
+  background: rgba(249, 1, 61, 0.3);
+}
+
+.decorImage {
+  position: absolute;
+  object-fit: cover;
+  pointer-events: none; 
+  z-index: 1; 
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.pic1 { top: 372px; left: 18px; width: 205px; height: 260px }
+.pic2 { top: 546px; left: 963px; width: 261px; height: 193px}
+.pic3 { top: 322px; left: 1093px; width: 157px; height: 201px}
+.pic4 { top: 40px; left: 925px; width: 210px; height: 255px; }
+.pic5 { top: 60px; left: 93px; width: 263px; height: 255px; }
+.pic6 { top: 637px; left: 244px; width: 147px; height: 118px; }
