@@ -1,6 +1,7 @@
 //MainPage.tsx
 import { useAppDispatch, useAppSelector } from "@/app/providers/StoreProvider/store";
 import { logoutUser } from "@/features/auth/api/authThunks";
+import { ThemeSwitcher } from "@/features/theme/ui/ThemeToggle/ThemeToggle";
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
@@ -16,8 +17,7 @@ export const MainPage = () => {
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>Вы успешно вошли!</h1>
-      <p>Это главная страница вашего приложения.</p>
+      <ThemeSwitcher/>
       <button 
         onClick={handleLogout}
         style={{ padding: '10px 15px', fontSize: '16px', cursor: 'pointer' }}
