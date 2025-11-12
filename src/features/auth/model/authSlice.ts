@@ -13,7 +13,7 @@ const translateAuthError = (serverError: any): string => {
     switch (errorMessage) {
         case 'invalid credentials':
             return 'Неверный логин или пароль';
-        case 'User already exists':
+        case 'user already exists':
             return 'Пользователь с таким email уже существует';
         default:
             return errorMessage; 

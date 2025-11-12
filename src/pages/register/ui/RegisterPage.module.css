@@ -12,6 +12,12 @@
   z-index: 0;
 }
 
+.errorText {
+  text-align: center;
+  color: #dc2626;
+  font-size: 16px; 
+}
+
 .formWrapper {
   display: flex;
   align-items: center;
